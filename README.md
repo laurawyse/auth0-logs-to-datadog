@@ -1,6 +1,6 @@
 # Auth0 - Logs to Datadog
 
-This extension will take all of your Auth0 logs and export them to [DataDog](https://www.datadoghq.com).
+This extension will take all of your Auth0 logs and export them to [Datadog](https://www.datadoghq.com).
 
 [![CircleCI](https://circleci.com/gh/BetaProjectWave/auth0-logs-to-datadog.svg?style=svg)](https://circleci.com/gh/BetaProjectWave/auth0-logs-to-datadog)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b60ef9948cea43cebea99dc8b0c1721e)](https://www.codacy.com/app/BetaProjectWave/auth0-logs-to-datadog?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BetaProjectWave/auth0-logs-to-datadog&amp;utm_campaign=Badge_Grade)
@@ -18,7 +18,7 @@ Because this is not an official extension, the assets are not hosted in the Auth
 
 ## Usage
 
-Go to the `logs` section of your [DataDog](https://app.datadoghq.com/logs) account and filter by `source: auth0`.
+Go to the `logs` section of your [Datadog](https://app.datadoghq.com/logs) account and filter by `source: auth0`.
 
 ## Build
 
