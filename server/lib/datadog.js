@@ -1,9 +1,9 @@
 const tls = require('tls');
 const logger = require('./logger');
+var r = require('request-promise');
 
 const metadata = {
   ddsourcecategory: 'external',
-  ddsource: 'auth0'
 };
 
 const config = {};
@@ -16,11 +16,9 @@ function DataDog(server, apiKey, customTags) {
   config.apiKey = apiKey;
 
   if (server === 'US') {
-    config.host = 'intake.logs.datadoghq.com';
-    config.port = 10516;
+    config.host = 'http-intake.logs.datadoghq.com';
   } else {
-    config.host = 'tcp-intake.logs.datadoghq.eu';
-    config.port = 443;
+    config.host = 'http-tcp-intake.logs.datadoghq.eu';
   }
 
   if (customTags) {
@@ -34,23 +32,32 @@ function DataDog(server, apiKey, customTags) {
 }
 
 DataDog.prototype.log = (log, callback) => {
-  const socket = tls.connect(config.port, config.host, () => {
-    if (!socket.authorized) {
-      return callback('Error connecting to DataDog');
-    }
+  // // Merge the metadata with the log and remove date if present
+  const merge = Object.assign(metadata, log, { date: undefined });
 
-    // Merge the metadata with the log
-    const merge = Object.assign(metadata, log);
+  var options = {
+    method: 'POST',
+    uri: `https://${config.host}/v1/input/`,
+    qs: {
+      ddsource: 'auth0',
+      service: 'auth0'
+    },
+    headers: {
+      'DD-API-KEY': config.apiKey,
+      'Content-Type': 'application/json'
+    },
+    body: merge,
+    json: true
+  };
 
-    logger.info('sending log to datadog: ');
-    logger.info(JSON.stringify(merge));
-    logger.info(`apiKey starts with "${config.apiKey.charAt(0)}", ends with "${config.apiKey.charAt(config.apiKey.length-1)}"`)
-
-    socket.write(`${config.apiKey} ${JSON.stringify(merge)}\r\n`);
-    socket.end();
-
-    return callback();
-  });
+  return r(options)
+    .then(r => {
+      return callback();
+    })
+    .catch(e => {
+      logger.info(`Error sending logs to datadog: ${e.message}`);
+      return callback();
+    });
 };
 
 module.exports = DataDog;
