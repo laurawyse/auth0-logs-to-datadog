@@ -40,6 +40,11 @@ DataDog.prototype.log = (log, callback) => {
 
     // Merge the metadata with the log
     const merge = Object.assign(metadata, log);
+
+    console.log('sending log to datadog: ');
+    console.log(JSON.stringify(merge));
+    console.log(`apiKey starts with "${config.apiKey.charAt(0)}", ends with "${config.apiKey.charAt(config.apiKey.length-1)}"`)
+    
     socket.write(`${config.apiKey} ${JSON.stringify(merge)}\r\n`);
     socket.end();
 
