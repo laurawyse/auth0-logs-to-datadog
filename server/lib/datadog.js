@@ -1,4 +1,5 @@
 const tls = require('tls');
+const logger = require('./logger');
 
 const metadata = {
   ddsourcecategory: 'external',
@@ -41,10 +42,10 @@ DataDog.prototype.log = (log, callback) => {
     // Merge the metadata with the log
     const merge = Object.assign(metadata, log);
 
-    console.log('sending log to datadog: ');
-    console.log(JSON.stringify(merge));
-    console.log(`apiKey starts with "${config.apiKey.charAt(0)}", ends with "${config.apiKey.charAt(config.apiKey.length-1)}"`)
-    
+    logger.info('sending log to datadog: ');
+    logger.info(JSON.stringify(merge));
+    logger.info(`apiKey starts with "${config.apiKey.charAt(0)}", ends with "${config.apiKey.charAt(config.apiKey.length-1)}"`)
+
     socket.write(`${config.apiKey} ${JSON.stringify(merge)}\r\n`);
     socket.end();
 
