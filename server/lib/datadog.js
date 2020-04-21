@@ -14,10 +14,10 @@ function DataDog(server, apiKey, customTags) {
 
   config.apiKey = apiKey;
 
-  if (server === 'US') {
-    config.host = 'http-intake.logs.datadoghq.com';
+  if (server === 'EU') {
+    config.host = 'http-intake.logs.datadoghq.eu';
   } else {
-    config.host = 'http-tcp-intake.logs.datadoghq.eu';
+    config.host = 'http-intake.logs.datadoghq.com';
   }
 
   if (customTags) {

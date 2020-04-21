@@ -62,7 +62,7 @@
       "description": "Datadog server HQ. If you are running in EU datadog please change this to EU",
       "type": "select",
       "allowMultiple": false,
-      "default": "intake.logs.datadoghq.com",
+      "default": "http-intake.logs.datadoghq.com",
       "options": [
         {
           "value": "US",
