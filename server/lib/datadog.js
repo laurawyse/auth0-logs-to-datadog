@@ -1,4 +1,3 @@
-const tls = require('tls');
 const logger = require('./logger');
 var r = require('request-promise');
 
@@ -32,7 +31,7 @@ function DataDog(server, apiKey, customTags) {
 }
 
 DataDog.prototype.log = (log, callback) => {
-  // // Merge the metadata with the log and remove date if present
+  // Merge the metadata with the log and remove date if present
   const merge = Object.assign(metadata, log, { date: undefined });
 
   var options = {

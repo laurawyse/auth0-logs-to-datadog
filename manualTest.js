@@ -1,6 +1,6 @@
 const DataDog = require('./server/lib/datadog');
 
-const datadog = new DataDog('US', '<<YOUR_API_KEY>>', 'env:dev,service:auth0');
+const datadog = new DataDog('US', process.env.DATADOG_API_KEY, 'env:dev,service:auth0');
 const cb = () => 'hi';
 
 const sampleLog = {
