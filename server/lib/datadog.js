@@ -32,7 +32,7 @@ function DataDog(server, apiKey, customTags) {
 
 DataDog.prototype.log = (log, callback) => {
   // Merge the metadata with the log and remove date if present
-  const merge = Object.assign(metadata, log, { date: undefined });
+  const merge = Object.assign(metadata, log, { date: undefined, auth0_date: log.date });
 
   var options = {
     method: 'POST',
